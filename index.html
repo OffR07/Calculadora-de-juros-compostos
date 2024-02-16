@@ -42,11 +42,7 @@
             cursor: pointer;
         }
 
-        #resultado {
-            margin-top: 20px;
-        }
-
-        #rendimentoMensal {
+        #resultado, #rendimentoMensal, #ganhosJuros {
             margin-top: 20px;
         }
     </style>
@@ -56,22 +52,23 @@
         <h1>Calculadora de Juros Compostos</h1>
         <form id="jurosForm">
             <label for="capitalInicial">Capital Inicial (R$):</label>
-            <input type="number" id="capitalInicial" step="0.01" value="0" required>
+            <input type="number" id="capitalInicial" step="0.01" min="0" value="0" required>
 
             <label for="investimentoMensal">Investimento Mensal (R$):</label>
-            <input type="number" id="investimentoMensal" step="0.01" value="0" required>
+            <input type="number" id="investimentoMensal" step="0.01" min="0" value="0" required>
 
             <label for="taxaJuros">Taxa de Juros ao Mês (%):</label>
-            <input type="number" id="taxaJuros" step="0.01" value="1" required>
+            <input type="number" id="taxaJuros" step="0.01" min="0" value="1" required>
 
             <label for="anosInvestimento">Anos de Investimento:</label>
-            <input type="number" id="anosInvestimento" value="1" required>
+            <input type="number" id="anosInvestimento" min="0" value="1" required>
 
             <button type="button" onclick="calcularJuros()">Calcular</button>
         </form>
 
         <div id="resultado"></div>
         <div id="rendimentoMensal"></div>
+        <div id="ganhosJuros"></div>
 
         <script>
             function calcularJuros() {
@@ -82,8 +79,10 @@
 
                 let investimentoAcumulado = capitalInicial;
                 let totalInvestimentoAcumulado = capitalInicial;
+                let totalInvestido = capitalInicial;
 
                 for (let i = 1; i <= 12 * anosInvestimento; i++) {
+                    totalInvestido += investimentoMensal;
                     investimentoAcumulado += investimentoMensal;
                     const jurosCompostos = investimentoAcumulado * taxaJuros;
                     investimentoAcumulado += jurosCompostos;
@@ -92,9 +91,11 @@
 
                 const valorAReceber = totalInvestimentoAcumulado.toFixed(2);
                 const rendimentoMensal = totalInvestimentoAcumulado * taxaJuros;
+                const ganhosJuros = totalInvestimentoAcumulado - totalInvestido;
 
-                document.getElementById("resultado").innerHTML = `Após ${anosInvestimento} anos você terá: R$ ${valorAReceber}`;
+                document.getElementById("resultado").innerHTML = `Valor a receber após ${anosInvestimento} anos: R$ ${valorAReceber}`;
                 document.getElementById("rendimentoMensal").innerHTML = `Rendimento mensal: R$ ${rendimentoMensal.toFixed(2)}`;
+                document.getElementById("ganhosJuros").innerHTML = `Ganhos em Juros: R$ ${ganhosJuros.toFixed(2)}`;
             }
         </script>
     </div>
