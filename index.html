@@ -52,10 +52,10 @@
         <h1>Calculadora de Juros Compostos</h1>
         <form id="jurosForm">
             <label for="capitalInicial">Capital Inicial (R$):</label>
-            <input type="number" id="capitalInicial" step="0.01" min="0" value="0" required>
+            <input type="text" id="capitalInicial" required>
 
             <label for="investimentoMensal">Investimento Mensal (R$):</label>
-            <input type="number" id="investimentoMensal" step="0.01" min="0" value="0" required>
+            <input type="text" id="investimentoMensal" required>
 
             <label for="taxaJuros">Taxa de Juros ao Mês (%):</label>
             <input type="number" id="taxaJuros" step="0.01" min="0" value="1" required>
@@ -71,9 +71,20 @@
         <div id="ganhosJuros"></div>
 
         <script>
+            function formatarValor(valor) {
+                valor = valor.replace(/\D/g, "");
+                valor = Number(valor);
+                valor = valor.toLocaleString("pt-BR");
+                return valor;
+            }
+
             function calcularJuros() {
-                const capitalInicial = parseFloat(document.getElementById("capitalInicial").value) || 0;
-                const investimentoMensal = parseFloat(document.getElementById("investimentoMensal").value) || 0;
+                let capitalInicial = document.getElementById("capitalInicial").value;
+                capitalInicial = parseFloat(capitalInicial.replace(/\./g, "").replace(",", ".")) || 0;
+
+                let investimentoMensal = document.getElementById("investimentoMensal").value;
+                investimentoMensal = parseFloat(investimentoMensal.replace(/\./g, "").replace(",", ".")) || 0;
+
                 const taxaJuros = parseFloat(document.getElementById("taxaJuros").value) / 100 || 0.01;
                 const anosInvestimento = parseInt(document.getElementById("anosInvestimento").value) || 1;
 
@@ -97,6 +108,14 @@
                 document.getElementById("rendimentoMensal").innerHTML = `Rendimento mensal: R$ ${rendimentoMensal.toFixed(2)}`;
                 document.getElementById("ganhosJuros").innerHTML = `Ganhos em Juros: R$ ${ganhosJuros.toFixed(2)}`;
             }
+
+            document.getElementById("capitalInicial").addEventListener("input", function() {
+                this.value = formatarValor(this.value);
+            });
+
+            document.getElementById("investimentoMensal").addEventListener("input", function() {
+                this.value = formatarValor(this.value);
+            });
         </script>
     </div>
 </body>
