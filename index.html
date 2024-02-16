@@ -42,7 +42,7 @@
             cursor: pointer;
         }
 
-        #resultado, #rendimentoMensal, #ganhosJuros {
+        #resultado, #rendimentoMensal, #ganhosJuros, #totalInvestido {
             margin-top: 20px;
         }
     </style>
@@ -67,6 +67,7 @@
         </form>
 
         <div id="resultado"></div>
+        <div id="totalInvestido"></div>
         <div id="rendimentoMensal"></div>
         <div id="ganhosJuros"></div>
 
@@ -104,7 +105,8 @@
                 const rendimentoMensal = totalInvestimentoAcumulado * taxaJuros;
                 const ganhosJuros = totalInvestimentoAcumulado - totalInvestido;
 
-                document.getElementById("resultado").innerHTML = `Após ${anosInvestimento} anos você terá: R$ ${valorAReceber}`;
+                document.getElementById("resultado").innerHTML = `Após ${anosInvestimento} ano(s) você terá: R$ ${valorAReceber}`;
+                document.getElementById("totalInvestido").innerHTML = `Total investido: R$ ${totalInvestido.toFixed(2)}`;
                 document.getElementById("rendimentoMensal").innerHTML = `Rendimento mensal: R$ ${rendimentoMensal.toFixed(2)}`;
                 document.getElementById("ganhosJuros").innerHTML = `Ganhos em Juros: R$ ${ganhosJuros.toFixed(2)}`;
             }
