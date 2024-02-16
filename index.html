@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Juros Compostos</title>
+    <style>
+        body {
+            background-color: #e6f7ff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .calculator {
+            border: 4px solid black;
+            padding: 20px;
+            text-align: center;
+            background-color: white;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 5px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+
+        #resultado {
+            margin-top: 20px;
+        }
+
+        #rendimentoMensal {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <h1>Calculadora de Juros Compostos</h1>
+        <form id="jurosForm">
+            <label for="capitalInicial">Capital Inicial (R$):</label>
+            <input type="number" id="capitalInicial" step="0.01" value="0" required>
+
+            <label for="investimentoMensal">Investimento Mensal (R$):</label>
+            <input type="number" id="investimentoMensal" step="0.01" value="0" required>
+
+            <label for="taxaJuros">Taxa de Juros ao Mês (%):</label>
+            <input type="number" id="taxaJuros" step="0.01" value="1" required>
+
+            <label for="anosInvestimento">Anos de Investimento:</label>
+            <input type="number" id="anosInvestimento" value="1" required>
+
+            <button type="button" onclick="calcularJuros()">Calcular</button>
+        </form>
+
+        <div id="resultado"></div>
+        <div id="rendimentoMensal"></div>
+
+        <script>
+            function calcularJuros() {
+                const capitalInicial = parseFloat(document.getElementById("capitalInicial").value) || 0;
+                const investimentoMensal = parseFloat(document.getElementById("investimentoMensal").value) || 0;
+                const taxaJuros = parseFloat(document.getElementById("taxaJuros").value) / 100 || 0.01;
+                const anosInvestimento = parseInt(document.getElementById("anosInvestimento").value) || 1;
+
+                let investimentoAcumulado = capitalInicial;
+                let totalInvestimentoAcumulado = capitalInicial;
+
+                for (let i = 1; i <= 12 * anosInvestimento; i++) {
+                    investimentoAcumulado += investimentoMensal;
+                    const jurosCompostos = investimentoAcumulado * taxaJuros;
+                    investimentoAcumulado += jurosCompostos;
+                    totalInvestimentoAcumulado += investimentoMensal + jurosCompostos;
+                }
+
+                const valorAReceber = totalInvestimentoAcumulado.toFixed(2);
+                const rendimentoMensal = totalInvestimentoAcumulado * taxaJuros;
+
+                document.getElementById("resultado").innerHTML = `Valor a receber após ${anosInvestimento} anos: R$ ${valorAReceber}`;
+                document.getElementById("rendimentoMensal").innerHTML = `Rendimento mensal: R$ ${rendimentoMensal.toFixed(2)}`;
+            }
+        </script>
+    </div>
+</body>
+</html>
