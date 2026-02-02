@@ -1,0 +1,8 @@
+{
+  "name": "Par ou Ímpar Royale",
+  "description": "Um jogo de apostas moderno de par ou ímpar com interface elegante.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
